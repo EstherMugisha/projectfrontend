@@ -18,7 +18,7 @@ const authSlice = createSlice(
                     state.isAuthenticated = true
                 }
                 else {
-                    axios.post('http://localhost:8080/authenticate', userCred)
+                    axios.post('http://localhost:8081/authenticate', userCred)
                     .then(response => {
                         Cookies.set('user', response.data.jwt);
                         state.isAuthenticated = true
@@ -38,7 +38,7 @@ const authSlice = createSlice(
                 //     state.isAuthenticated = true
                 // }
                 // else {
-                    axios.post('http://localhost:8080/user', userCred)
+                    axios.post('http://localhost:8081/user', userCred)
                     .then(response => {
                         // Cookies.set('user', response.data.jwt)
                         // state.isAuthenticated = true

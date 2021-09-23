@@ -1,16 +1,22 @@
 import React, {useContext, useEffect, useState} from "react";
 import axios from 'axios';
 import './ShoppingCart.css';
-import Product from "../Product/Product";
 import Cookies from 'js-cookie';
 import {useSelector} from "react-redux";
-import {ShowProducts} from "../../store/ShowProducts";
+import {APIConfig} from "../../store/API-Config";
+import CartItem from "./CartItem/CartItem";
+import Total from "./Total/Total";
+
 
 const ShoppingCart = (props) => {
+
+    // const APIs = useContext(APIConfig);
+    // const cartAPI = APIs.cartAPI;
+
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
-    const {showProducts, setShowProducts, allProducts, setAllProducts} = useContext(ShowProducts);
 
     const [cartItems, setCartItems] = useState([]);
+    const [total, setTotal] = useState(0);
     const [displayAllFlag, setDisplayAllFlag] = useState(true);
     const [isLoading, setLoading] = useState(false);
     const [error, setError] = useState();
@@ -34,20 +40,31 @@ const ShoppingCart = (props) => {
 
     useEffect(fetchCart, []);
 
-    const rproducts = cartItems.cartLine.map(product => {
+    function calculateTotal(price) {
+        setTotal(total + price);
+        console.log(total);
+    }
+
+    function showProduct(info) {
+        console.log(info);
+        alert(info);
+    }
+
+    const itemsOnCart = cartItems.map(function (item) {
         return (
-            <Product
-                key={product.id}
-                title={product.title}
-                price={product.price}
-                category={product.category}
-                id={product.id}
-            />)
+            <CartItem
+                name={item.product.name}
+                price={item.product.price}
+                info={item.quantity}
+                handleShow={showProduct}
+                handleTotal={calculateTotal}
+            />
+        );
     });
 
-    let content = <p>No posts available</p>;
-    if (rproducts.length > 0) {
-        content = rproducts;
+    let content = <p>No items in cart</p>;
+    if (itemsOnCart.length > 0) {
+        content = itemsOnCart;
     } else if (error) {
         content = <p>{error}</p>;
     } else if (isLoading) {
@@ -55,13 +72,11 @@ const ShoppingCart = (props) => {
     }
 
     return (
-        <React.Fragment>
-            {isAuthenticated ? null : props.history.push("/login")}
-            <section className="Products">
-                {content}
-            </section>
-        </React.Fragment>
+        <div>
+            {content}
+            <Total total={total}/>
+        </div>
     );
-}
 
+}
 export default ShoppingCart;

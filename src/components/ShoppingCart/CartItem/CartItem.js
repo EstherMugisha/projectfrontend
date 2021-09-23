@@ -1,6 +1,4 @@
 import React, {useContext} from "react";
-import './Product.css';
-import {ShowProducts} from "../../store/ShowProducts";
 
 class CartItem extends React.Component {
     constructor(props) {
@@ -60,3 +58,5 @@ class CartItem extends React.Component {
         );
     }
 }
+
+export default CartItem;
