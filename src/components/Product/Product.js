@@ -1,36 +1,61 @@
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import './Product.css';
-import {ShowProducts} from "../../store/ShowProducts";
+import {AllProducts} from "../../store/AllProducts";
+import {useSelector} from 'react-redux';
 
 const Product = (props) => {
-    const {showProducts, setShowProducts} = useContext(ShowProducts);
+    const role = props.role;
+    const {allProducts, setAllProducts} = useContext(AllProducts);
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
     function removeProductHandler() {
-        const index = showProducts.indexOf(props.id)
-        setShowProducts(showProducts.filter((item, idx) => idx !== index));
+        const index = allProducts.indexOf(props.id)
+        setAllProducts(allProducts.filter((item, idx) => idx !== index));
+    }
+
+    function addToCart(){
+
+    }
+
+    function removeFromCart(){
+
     }
 
     return (
-        <section className="Product">
+            <section className="Product">
             <h1>{props.title}</h1>
             <div className="Info">
+                <div className="name">{props.name}</div>
                 <div className="Price">{props.price}</div>
-                <div className="Category">{props.category}</div>
+                <div className="description">{props.description}</div>
 
-                {
-                    showProducts.includes(props.id)
+            {isAuthenticated ? null : props.history.push("/login")}
+            {
+            role == "BUYER" ?
+            <section>
+                        {
+                        allProducts.includes(props.id)
                         ?
-                        <button onClick={() => {removeProductHandler()}}>
-                            Show </button>
+                        <button onClick={() => {addToCart()}}>
+                            add to cart </button>
                         :
                         <button onClick={() => {
-                            console.log(showProducts);
-                            setShowProducts([...showProducts, props.id])
+                            console.log(allProducts);
+                            removeFromCart([...allProducts, props.id])
                         }}>
-                            Hide </button>}
+                            remove from cart </button>}
+            </section>
+            :
+            <section>
+                <button onClick={() => {removeProductHandler()}}>Remove Product </button>       
+            </section>
+}
+
+                
 
             </div>
         </section>
+                    
     );
 }
 

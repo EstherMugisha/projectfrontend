@@ -4,21 +4,23 @@ import './Products.css';
 import Product from "../Product/Product";
 import Cookies from 'js-cookie';
 import {useSelector} from "react-redux";
-import {ShowProducts} from "../../store/ShowProducts";
+import AllProducts from "../../store/AllProducts";
 import { APIConfig } from "../../store/API-Config";
+import { useHistory } from "react-router";
 
 
 const Products = (props) => {
+    const {allProducts, setAllProducts} = useContext(AllProducts);
     const APIs= useContext(APIConfig);
     const productAPI=APIs.productAPI;
+    const history= useHistory();
 
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated); // put the name of the slice
-    const {showProducts, setShowProducts, allProducts, setAllProducts} = useContext(ShowProducts);
 
     const [products, setProducts] = useState([]);
-    const [displayAllFlag, setDisplayAllFlag] = useState(true);
     const [isLoading, setLoading] = useState(false); // indicates that is retreiving data
     const [error, setError] = useState();
+    const [role,setRole] = useState("BUYER");
 
     function fetchProductsHandler() {
         const headers = {
@@ -30,7 +32,10 @@ const Products = (props) => {
         axios.get(productAPI, {headers})
             .then(response => {
                 setProducts(response.data);
-                setAllProducts(response.data)
+                setAllProducts(response.data);
+                if(isAuthenticated){
+                    setRole(Cookies.get('user_role'));
+                }
             })
             .catch(error => {
                 setError(error.message);
@@ -39,16 +44,17 @@ const Products = (props) => {
 
     }
 
-    useEffect(fetchProductsHandler, [displayAllFlag]); // This will be fetched when mounted
+    useEffect(fetchProductsHandler, []); // This will be fetched when mounted
 
     const rproducts = products.map(product => {
         return (
             <Product
                 key={product.id}
-                title={product.title}
+                name={product.name}
                 price={product.price}
-                category={product.category}
+                description={product.description}
                 id={product.id}
+                role={role}
             />)
     });
 
@@ -61,30 +67,26 @@ const Products = (props) => {
         content = <p> Loading ... </p>;  // BONUS MAKE THIS WAIT FOR A 30 seconds
     }
 
-    function displayShownProducts() {
-        console.log("ananda");
-        setDisplayAllFlag(true);
+    function addProduct() {
+        history.push('/new-product');
     }
 
     function displayAllProducts() {
         console.log("ananda 2");
-        setDisplayAllFlag(false);
     }
 
     return (
         <React.Fragment>
             {isAuthenticated ? null : props.history.push("/login")}
-            <section className="ProductsButton">
-                {
-                    displayAllFlag
-                        ?
-                        <button onClick={displayAllProducts}>Display All Products</button>
-                        :
-                        <button onClick={displayShownProducts}>Display Shown products</button>
-                }
-
-            </section>
-            <section className="Products">
+            {
+                role == "SELLER" ?
+                <section className="addProduct">
+                <button onClick={addProduct}>Add product</button>
+                </section>
+                : null
+              
+            }
+                <section className="Products">
                 {content}
             </section>
         </React.Fragment>
