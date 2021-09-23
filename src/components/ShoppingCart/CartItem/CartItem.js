@@ -1,62 +1,48 @@
-import React, {useContext} from "react";
+import React, {useState} from "react";
+import toast, { Toaster } from 'react-hot-toast';
+import './CartItem.css';
 
-class CartItem extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            qty: 0
-        };
-        this.add = this.add.bind(this);
-        this.subtract = this.subtract.bind(this);
-        this.showInfo = this.showInfo.bind(this);
+const CartItem = (props) => {
+    const [quantity, setQuantity] = useState();
+
+    function add() {
+        setQuantity(quantity + 1);
+        props.handleAddToCart(props.id);
     }
 
-    add() {
-        this.setState({
-            qty: this.state.qty + 1
-        });
-        this.props.handleTotal(this.props.price);
+    function subtract() {
+        setQuantity(quantity - 1);
+        props.handleRemoveFromCart(props.id);
     }
 
-    subtract() {
-        this.setState({
-            qty: this.state.qty - 1
-        });
-        this.props.handleTotal(-this.props.price);
-    }
-
-    showInfo() {
-        this.props.handleShow(this.props.info);
-    }
-
-    render() {
-        return (
-            <div>
-                <div className="row form-group">
-                    <div className="col-sm-10">
-                        <h4>{this.props.name}: ${this.props.price}</h4>
-                    </div>
-                    <div className="col-sm-2 text-right">qty: {this.state.qty}</div>
+    return (
+        <div>
+            <div className="row form-group">
+                <div className="col-sm-10">
+                    <h4>{props.name}: ${props.price}</h4>
                 </div>
-                <div className="row btn-toolbar">
-                    <div className="col-6">
-                        <button className="btn btn-outline-primary" onClick={this.showInfo}>
-                            show info
-                        </button>
-                    </div>
-                    <div className="col-6 text-right">
-                        <button className="btn btn-outline-primary" onClick={this.add}>
-                            +1
-                        </button>
-                        <button className="btn btn-outline-primary" onClick={this.subtract} disabled={this.state.qty < 1}>
-                            -1
-                        </button>
-                    </div>
-                </div>
-                <hr />
+                <div className="col-sm-2 text-right">quantity: {props.quantity}</div>
             </div>
-        );
-    }
+            <div className="row btn-toolbar">
+                <div className="col-6 pull-left">
+                    <button className="btn btn-outline-primary">
+                        show info
+                    </button>
+                </div>
+                <div className="col-6 text-right">
+                    <button className="btn btn-outline-primary" onClick={add}>
+                        +1
+                    </button>
+                    <button className="btn btn-outline-primary" onClick={subtract}
+                            disabled={quantity < 1}>
+                        -1
+                    </button>
+                </div>
+            </div>
+            <hr/>
+            <Toaster position="top-right"/>
+        </div>
+    );
 }
 
 export default CartItem;

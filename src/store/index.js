@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 
 
 // Authentication
-const initialAuthState = { isAuthenticated: false };
+const initialAuthState = { isAuthenticated: Cookies.get("user") };
 
 const authSlice = createSlice(
     {
