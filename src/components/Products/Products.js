@@ -5,9 +5,13 @@ import Product from "../Product/Product";
 import Cookies from 'js-cookie';
 import {useSelector} from "react-redux";
 import {ShowProducts} from "../../store/ShowProducts";
+import { APIConfig } from "../../store/API-Config";
 
 
 const Products = (props) => {
+    const APIs= useContext(APIConfig);
+    const productAPI=APIs.productAPI;
+
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated); // put the name of the slice
     const {showProducts, setShowProducts, allProducts, setAllProducts} = useContext(ShowProducts);
 
@@ -23,7 +27,7 @@ const Products = (props) => {
         }
         setLoading(true);
         setError(null); // this is to set the error to null, if there were any previous errors existing
-        axios.get("/products", {headers})
+        axios.get(productAPI, {headers})
             .then(response => {
                 setProducts(response.data);
                 setAllProducts(response.data)
