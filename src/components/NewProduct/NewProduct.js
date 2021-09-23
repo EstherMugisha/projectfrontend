@@ -1,10 +1,15 @@
-import React, {Fragment, useRef} from 'react'
+import React, {Fragment, useRef, useContext} from 'react'
 import './NewProduct.css'
 import axios from "axios";
 import Cookies from "js-cookie";
 import {useSelector} from "react-redux";
+import APIConfig from '../../store/API-Config';
+
 
 const NewProduct = (props) => {
+    const APIs= useContext(APIConfig);
+    const cartAPI=APIs.cartAPI;
+
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated); // put the name of the slice
     const newProductForm = useRef();
 
@@ -21,6 +26,14 @@ const NewProduct = (props) => {
             category: form['category'].value
         };
         console.log(data);
+
+        axios.get(cartAPI, data, {headers})
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
 
         axios.post("/products", data, {headers})
             .then(data => {

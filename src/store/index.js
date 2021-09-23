@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 
 
 // Authentication
-const initialAuthState = { isAuthenticated: false };
+const initialAuthState = { isAuthenticated: Cookies.get("user") };
 
 const authSlice = createSlice(
     {
@@ -18,9 +18,10 @@ const authSlice = createSlice(
                     state.isAuthenticated = true
                 }
                 else {
-                    axios.post('http://localhost:8081/authenticate', userCred)
+                    axios.post('http://localhost:8080/authenticate', userCred)
                     .then(response => {
                         Cookies.set('user', response.data.jwt);
+                        Cookies.set('user_role', response.data.user.role);
                         state.isAuthenticated = true
                         axios.defaults.headers.common = {
                             'Authorization': 'Bearer ' + response.data.jwt
@@ -38,7 +39,7 @@ const authSlice = createSlice(
                 //     state.isAuthenticated = true
                 // }
                 // else {
-                    axios.post('http://localhost:8081/user', userCred)
+                    axios.post('http://localhost:8080/user', userCred)
                     .then(response => {
                         // Cookies.set('user', response.data.jwt)
                         // state.isAuthenticated = true
@@ -52,7 +53,8 @@ const authSlice = createSlice(
 
             },
             logout(state) {
-                Cookies.remove('user')
+                Cookies.remove('user');
+                Cookies.remove('user_role');
                 axios.defaults.headers.common = {
                     'Authorization': ''
                 };

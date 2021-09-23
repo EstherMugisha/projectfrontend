@@ -1,11 +1,11 @@
 import React, {useContext} from 'react';
 import { useSelector } from 'react-redux';
 import './UserProfile.module.css';
-import {ShowProducts} from "../../store/ShowProducts";
+import {AllProducts} from "../../store/AllProducts";
 
 const UserProfile = (props) => {
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated); // put the name of the slice
-  const {showProducts, setShowProducts, allProducts, setAllProducts} = useContext(ShowProducts);
+  const {allProducts, setAllProducts} = useContext(AllProducts);
 
   return (
     <React.Fragment>
@@ -16,7 +16,7 @@ const UserProfile = (props) => {
         </div>
 
         <h4>Number of products: {allProducts.length}</h4>
-        <h4>Number of shown products: {showProducts.length}</h4>
+        <h4>Number of shown products: {allProducts.length}</h4>
       </main>
 
     </React.Fragment>

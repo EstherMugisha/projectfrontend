@@ -4,33 +4,37 @@ import './Products.css';
 import Product from "../Product/Product";
 import Cookies from 'js-cookie';
 import {useSelector} from "react-redux";
-import {ShowProducts} from "../../store/ShowProducts";
-import { APIConfig } from "../../store/API-Config";
+import AllProducts from "../../store/AllProducts";
+import { useHistory } from "react-router";
+import toast, {Toaster} from "react-hot-toast";
 
 
 const Products = (props) => {
-    const APIs= useContext(APIConfig);
-    // const productAPI=APIs.productAPI;
+    const {allProducts, setAllProducts} = useContext(AllProducts);
+    const history= useHistory();
 
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated); // put the name of the slice
-    const {showProducts, setShowProducts, allProducts, setAllProducts} = useContext(ShowProducts);
 
     const [products, setProducts] = useState([]);
-    const [displayAllFlag, setDisplayAllFlag] = useState(true);
     const [isLoading, setLoading] = useState(false); // indicates that is retreiving data
     const [error, setError] = useState();
+    const [role,setRole] = useState("BUYER");
+
+    const headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': `Bearer ${Cookies.get('user')}`,
+    }
 
     function fetchProductsHandler() {
-        const headers = {
-            'Access-Control-Allow-Origin': '*',
-            'Authorization': `Bearer ${Cookies.get('user')}`,
-        }
         setLoading(true);
         setError(null); // this is to set the error to null, if there were any previous errors existing
         axios.get('/products', {headers})
             .then(response => {
                 setProducts(response.data);
-                setAllProducts(response.data)
+                setAllProducts(response.data);
+                if(isAuthenticated){
+                    setRole(Cookies.get('user_role'));
+                }
             })
             .catch(error => {
                 setError(error.message);
@@ -39,16 +43,30 @@ const Products = (props) => {
 
     }
 
-    useEffect(fetchProductsHandler, [displayAllFlag]); // This will be fetched when mounted
+    useEffect(fetchProductsHandler, []); // This will be fetched when mounted
+
+    function addProductToCart(id) {
+        const data = {
+            quantity: 1,
+            id: id
+        }
+        axios.post('/cart', data, {headers}).then(function (response) {
+            toast.success('Added to Cart');
+        }).catch(error => {
+            toast(error.message);
+        })
+    }
 
     const rproducts = products.map(product => {
         return (
             <Product
                 key={product.id}
-                title={product.title}
+                name={product.name}
                 price={product.price}
-                category={product.category}
+                description={product.description}
                 id={product.id}
+                role={role}
+                addProductToCart={addProductToCart}
             />)
     });
 
@@ -61,32 +79,24 @@ const Products = (props) => {
         content = <p> Loading ... </p>;  // BONUS MAKE THIS WAIT FOR A 30 seconds
     }
 
-    function displayShownProducts() {
-        console.log("ananda");
-        setDisplayAllFlag(true);
-    }
-
-    function displayAllProducts() {
-        console.log("ananda 2");
-        setDisplayAllFlag(false);
+    function addProduct() {
+        history.push('/new-product');
     }
 
     return (
         <React.Fragment>
             {isAuthenticated ? null : props.history.push("/login")}
-            <section className="ProductsButton">
-                {
-                    displayAllFlag
-                        ?
-                        <button onClick={displayAllProducts}>Display All Products</button>
-                        :
-                        <button onClick={displayShownProducts}>Display Shown products</button>
-                }
-
-            </section>
-            <section className="Products">
+            {
+                role === "SELLER" ?
+                <section className="addProduct">
+                <button onClick={addProduct}>Add product</button>
+                </section>
+                : null
+            }
+                <section className="Products">
                 {content}
             </section>
+            <Toaster position="top-right"/>
         </React.Fragment>
     );
 }
