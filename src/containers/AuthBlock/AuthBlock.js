@@ -7,13 +7,20 @@ import {Redirect, Route, Switch} from 'react-router';
 import Products from "../../components/Products/Products";
 import NewProduct from "../../components/NewProduct/NewProduct";
 import {ShowProducts} from "../../store/ShowProducts";
+import APIConfig from "../../store/API-Config"
 
 const AuthBlock = () => {
     const [showProducts, setShowProducts] = useState([]);
     const [allProducts, setAllProducts] = useState([]);
+    const base="http://localhost:8080/";
 
     return (
         <ShowProducts.Provider value={{showProducts, setShowProducts, allProducts, setAllProducts}}>
+            <APIConfig.Provider value={
+                {
+                productAPI: base +'products'
+                }
+            }>
             <Fragment>
                 <Header/>
                 <Switch>
@@ -25,6 +32,7 @@ const AuthBlock = () => {
                     <Redirect from="/" to='login'/>
                 </Switch>
             </Fragment>
+           </APIConfig.Provider>
         </ShowProducts.Provider>
     );
 }
