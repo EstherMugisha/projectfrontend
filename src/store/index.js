@@ -20,7 +20,7 @@ const authSlice = createSlice(
                 else {
                     axios.post('http://localhost:8080/authenticate', userCred)
                     .then(response => {
-                        Cookies.set('user', response.data.jwt)
+                        Cookies.set('user', response.data.jwt);
                         state.isAuthenticated = true
                         axios.defaults.headers.common = {
                             'Authorization': 'Bearer ' + response.data.jwt

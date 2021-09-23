@@ -7,6 +7,7 @@ import {Redirect, Route, Switch} from 'react-router';
 import Products from "../../components/Products/Products";
 import NewProduct from "../../components/NewProduct/NewProduct";
 import {ShowProducts} from "../../store/ShowProducts";
+import ShoppingCart from "../../components/ShoppingCart/ShoppingCart";
 
 const AuthBlock = () => {
     const [showProducts, setShowProducts] = useState([]);
@@ -22,6 +23,7 @@ const AuthBlock = () => {
                     <Route path='/user' component={UserProfile}/>
                     <Route path='/products' component={Products}/>
                     <Route path='/new-product' component={NewProduct}/>
+                    <Route path='/cart' component={ShoppingCart}/>
                     <Redirect from="/" to='login'/>
                 </Switch>
             </Fragment>
