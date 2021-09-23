@@ -14,7 +14,7 @@ const Auth = (props) => {
     const userCredentials = { username: form['user'].value, password: form['password'].value };
         
     dispatch(authActions.login(userCredentials));
-    props.history.push("/user");
+    props.history.push("/products");
   }
 
   return (

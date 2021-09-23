@@ -10,7 +10,7 @@ import { APIConfig } from "../../store/API-Config";
 
 const Products = (props) => {
     const APIs= useContext(APIConfig);
-    const productAPI=APIs.productAPI;
+    // const productAPI=APIs.productAPI;
 
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated); // put the name of the slice
     const {setAllProducts} = useContext(ShowProducts);
@@ -28,7 +28,7 @@ const Products = (props) => {
         }
         setLoading(true);
         setError(null); // this is to set the error to null, if there were any previous errors existing
-        axios.get(productAPI, {headers})
+        axios.get('/products', {headers})
             .then(response => {
                 setProducts(response.data);
                 setAllProducts(response.data)

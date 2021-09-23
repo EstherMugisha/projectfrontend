@@ -16,16 +16,17 @@ const SignUp = (props) => {
       email: form["email"].value,
       username: form["user"].value,
       password: form["password"].value,
-      role: 1,
+      role: form["utype"].value,
     };
     console.log(userInfo);
     const headers = {
       "Access-Control-Allow-Origin": "*"
   }
     axios
-      .post(userAPI, userInfo,headers)
+      .post('/users', userInfo,headers)
       .then((data) => {
         console.log(data);
+        props.history.push("/login");
       })
       .catch((error) => console.error(error));
     // dispatch(authActions.signup(userInfo));
