@@ -18,7 +18,8 @@ const AuthBlock = () => {
         <ShowProducts.Provider value={{showProducts, setShowProducts, allProducts, setAllProducts}}>
             <APIConfig.Provider value={
                 {
-                productAPI: base +'products'
+                productAPI: base +'products',
+                userAPI:base + 'users'
                 }
             }>
             <Fragment>

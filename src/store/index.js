@@ -31,14 +31,6 @@ const authSlice = createSlice(
 
 
             },
-            signup(state, action) {
-                const usrInfo = action.payload;
-                    axios.post('http://localhost:8080/users', usrInfo)
-                    .then(response => {
-                        console.log(response);
-                    })
-                    .catch(console.log(usrInfo))
-            },
             logout(state) {
                 Cookies.remove('user')
                 axios.defaults.headers.common = {
