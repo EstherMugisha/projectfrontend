@@ -31,6 +31,26 @@ const authSlice = createSlice(
 
 
             },
+            signup(state, action) {
+                const userCred = action.payload;
+                
+                // if (Cookies.get('user') != null) {
+                //     state.isAuthenticated = true
+                // }
+                // else {
+                    axios.post('http://localhost:8080/user', userCred)
+                    .then(response => {
+                        // Cookies.set('user', response.data.jwt)
+                        // state.isAuthenticated = true
+                        // axios.defaults.headers.common = {
+                        //     'Authorization': 'Bearer ' + response.data.jwt
+                        // };
+                    })
+                    .catch(err => console.log(err.message))
+                // }
+
+
+            },
             logout(state) {
                 Cookies.remove('user')
                 axios.defaults.headers.common = {

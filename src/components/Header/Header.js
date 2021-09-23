@@ -1,5 +1,5 @@
 import React from 'react';
-import './Header.module.css';
+import './header.css';
 import {useDispatch, useSelector} from 'react-redux';
 import {authActions} from '../../store/index';
 import {Link, Redirect} from 'react-router-dom';
@@ -16,7 +16,7 @@ const Header = (props) => {
 
     return (
         <header className="header">
-            <h1>Final Exam</h1>
+            <h1>Mini Online Market</h1>
             {isAuthenticated && (<nav>
                 <ul>
                     <li>

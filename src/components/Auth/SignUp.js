@@ -4,23 +4,21 @@ import { useDispatch } from 'react-redux';
 import { authActions } from '../../store/index';
 import { Link } from 'react-router-dom';
 
-const Auth = (props) => {
-  
+const SignUp = (props) => {
   const dispatch = useDispatch();
   const formData = useRef();
 
-  const loginHandler = () => {
+  const SignupHandler = () => {
     const form = formData.current
     const userCredentials = { username: form['user'].value, password: form['password'].value };
         
-    dispatch(authActions.login(userCredentials));
+    dispatch(authActions.signup(userCredentials));
     props.history.push("/user");
   }
-
   return (
     <main className="auth">
       <section>
-        <form ref={formData} onSubmit={loginHandler}>
+        <form ref={formData} onSubmit={SignupHandler}>
           <div >
             <label htmlFor='user'>User</label>
             <input type='text' id='user' />
@@ -36,5 +34,4 @@ const Auth = (props) => {
     </main>
   );
 };
-
-export default Auth;
+export default SignUp;
