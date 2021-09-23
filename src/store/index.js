@@ -18,7 +18,7 @@ const authSlice = createSlice(
                     state.isAuthenticated = true
                 }
                 else {
-                    axios.post('http://localhost:8080/authenticate', userCred)
+                    axios.post('/authenticate', userCred)
                     .then(response => {
                         Cookies.set('user', response.data.jwt);
                         state.isAuthenticated = true
