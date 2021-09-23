@@ -2,7 +2,8 @@ import React, { useRef } from 'react';
 import './Auth.module.css';
 import { useDispatch } from 'react-redux';
 import { authActions } from '../../store/index';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+
 
 const SignUp = (props) => {
   const dispatch = useDispatch();
@@ -10,25 +11,43 @@ const SignUp = (props) => {
 
   const SignupHandler = () => {
     const form = formData.current
-    const userCredentials = { username: form['user'].value, password: form['password'].value };
-        
-    dispatch(authActions.signup(userCredentials));
-    props.history.push("/user");
+    const userInfo = { name: "l",email:"r@t.v",username: "k", password: "h", role: 1 };
+    console.log(userInfo);
+        axios.post('/users',userInfo).then(
+          data=>{console.log(data)}
+        ).catch((error)=>console.error(error));
+    // dispatch(authActions.signup(userInfo));
+    // props.history.push("/user");
   }
   return (
     <main className="auth">
       <section>
         <form ref={formData} onSubmit={SignupHandler}>
+        <div >
+            <label htmlFor='name'>Fullname</label>
+            <input type='text' id='name' />
+          </div>
+        <div >
+            <label htmlFor='email'>Email</label>
+            <input type='email' id='email' />
+          </div>
+          
           <div >
-            <label htmlFor='user'>User</label>
+            <label htmlFor='user'>Username</label>
             <input type='text' id='user' />
           </div>
           <div >
             <label htmlFor='password'>Password</label>
             <input type='password' id='password' />
           </div>
-          <button>Login</button>
-          <div>Dont have an account yet? <div><Link to="/sign-up">Sign Up</Link></div> </div>
+          <div>
+          <label>User Type</label>
+      <select htmlFor='utype' name='utype'>
+        <option value="1">Buyer</option>
+        <option value="2">Seller</option>
+      </select>
+          </div>
+          <button>SignUp</button>
         </form>
       </section>
     </main>

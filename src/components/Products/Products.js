@@ -9,7 +9,8 @@ import {ShowProducts} from "../../store/ShowProducts";
 
 const Products = (props) => {
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated); // put the name of the slice
-    const {showProducts, setShowProducts, allProducts, setAllProducts} = useContext(ShowProducts);
+    const {setAllProducts} = useContext(ShowProducts);
+    // const {showProducts, setShowProducts, allProducts, setAllProducts} = useContext(ShowProducts);
 
     const [products, setProducts] = useState([]);
     const [displayAllFlag, setDisplayAllFlag] = useState(true);
