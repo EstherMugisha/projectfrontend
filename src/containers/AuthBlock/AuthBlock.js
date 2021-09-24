@@ -12,7 +12,7 @@ import APIConfig from "../../store/API-Config";
 import SellerFollow from '../../components/Following/SellerFollow';
 
 const AuthBlock = () => {
-    const [followedSellers, setFollowedSellers] = useState([]);
+    const {followedSellers, setFollowedSellers} = useState([]);
     // const base = "http://localhost:8081/";
 
     return (

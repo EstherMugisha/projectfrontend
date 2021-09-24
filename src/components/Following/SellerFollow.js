@@ -9,7 +9,7 @@ const SellerFollow = () => {
     const [isLoading, setLoading] = useState(false); 
     const [error, setError] = useState();
     const [followStatus, setFollowStatus]=useState(false);
-    const [followedSellers, setFollowedSellers]=useContext(FollowedSellers);
+    const {followedSellers, setFollowedSellers}=useState([]);
 
     function fetchSellers(){
         const headers = {
@@ -31,12 +31,14 @@ const SellerFollow = () => {
 
     function follow(id){
         setFollowStatus(true);
-        setFollowedSellers(followedSellers.push(id));
+        console.log(id)
+         followedSellers.push(id);
 
      }
     function unfollow(idx){
         setFollowStatus(false);
-        setFollowedSellers(followedSellers.filter((seller)=>{seller.id !==idx}))
+        console.log(idx)
+        followedSellers.filter((seller)=>{seller.id !==idx})
     }
 
     const sells = sellers.map((seller)=>{
@@ -44,7 +46,7 @@ const SellerFollow = () => {
         <div>
             {seller.name}
             {followStatus ?
-            <button onClick={()=>{unfollow(seller.id)}}>Follow</button>
+            <button onClick={unfollow}>Follow</button>
             :
             <button onClick={()=>{follow(seller.id)}}>Unfollow</button>
             }
@@ -52,16 +54,12 @@ const SellerFollow = () => {
         )
         }
     )
-    const followed=followedSellers.map((seller)=>{
-        return(
-            seller.name
-        )
-    })
+    
     return (
         <div>
             <section>
                 {sells}
-                {followed}
+                {/* {followed} */}
             </section>   
         </div>
     )
