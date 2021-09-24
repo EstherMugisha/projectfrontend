@@ -18,7 +18,7 @@ const Product = (props) => {
             'Authorization': `Bearer ${Cookies.get('user')}`,
         }
         axios.delete('/products/'+props.id, {headers})
-        .then(history.push('/products'));
+        .then(props.refreshProducts);
     }
 
     function addToCart(){
@@ -46,7 +46,7 @@ const Product = (props) => {
 
             {isAuthenticated ? null : props.history.push("/login")}
             {
-            role === "BUYER" ?
+            role === "SELLER" ?
             <div>
                 <button onClick={() => {removeProductHandler()}}>Remove Product </button>   
             </div>

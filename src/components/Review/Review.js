@@ -16,7 +16,7 @@ const Review = (props) => {
         }
         setLoading(true);
         setError(null); 
-    axios.get('/products/'+props.id+'/review', {headers})
+    axios.get('http://localhost:8080/products/'+props.id+'/review', {headers})
             .then(response => {
                 setReviews(response.data);
             })

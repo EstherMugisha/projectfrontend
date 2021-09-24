@@ -5,6 +5,8 @@ import Cookies from "js-cookie";
 import {useSelector} from "react-redux";
 import APIConfig from '../../store/API-Config';
 import Products from '../Products/Products';
+import { FormErrors } from './FormErrors';
+
 
 
 const NewProduct = (props) => {
@@ -43,6 +45,9 @@ const NewProduct = (props) => {
         <Fragment>
             {isAuthenticated ? null : props.history.push("/login")}
             <div className="NewProduct">
+            {/* <div className="panel panel-default">
+                <FormErrors formErrors={this.state.formErrors} />
+            </div> */}
                 <form ref={newProductForm}>
                     <h1>Add a Product</h1>
                     <label>name</label>

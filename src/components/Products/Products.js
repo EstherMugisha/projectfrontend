@@ -40,7 +40,7 @@ const Products = (props) => {
 
     }
 
-    useEffect(fetchProductsHandler, [products]); // This will be fetched when mounted
+    useEffect(fetchProductsHandler, []); // This will be fetched when mounted
 
     const rproducts = products.map(product => {
         return (
@@ -52,10 +52,11 @@ const Products = (props) => {
                 description={product.description}
                 id={product.id}
                 role={role}
+                refreshProducts={fetchProductsHandler}
               />
 
               <Review
-              key={product.id}
+              key={product.name}
               id={product.id}
               />
               </section>

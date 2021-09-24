@@ -2,6 +2,7 @@ import React, {Fragment, useRef, useContext} from 'react'
 import axios from "axios";
 import Cookies from "js-cookie";
 import {useSelector} from "react-redux";
+import { FormErrors } from './FormErrors';
 
 
 
@@ -37,6 +38,9 @@ const NewReview = (props) => {
         <Fragment>
             {isAuthenticated ? null : props.history.push("/login")}
             <div className="NewProduct">
+            {/* <div className="panel panel-default">
+                <FormErrors formErrors={this.state.formErrors} />
+            </div> */}
                 <form ref={newReviewForm}>
                     <h1>Add a Review</h1>
                     <label>content</label>

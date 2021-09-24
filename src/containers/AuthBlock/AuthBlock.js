@@ -25,6 +25,7 @@ const AuthBlock = () => {
                     <Route path='/user' component={UserProfile}/>
                     <Route path='/products' component={Products}/>
                     <Route path='/new-product' component={NewProduct}/>
+                    <Route path='/sellers' component={SellerFollow}/>
                     <Route path='/cart' component={ShoppingCart}/>
                     <Route path='/review' component={Review}/>
                     <Route path='/new-review' component={NewReview}/>

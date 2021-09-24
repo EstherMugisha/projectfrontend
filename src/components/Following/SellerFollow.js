@@ -31,14 +31,14 @@ const SellerFollow = () => {
 
     function follow(id){
         setFollowStatus(true);
-        console.log(id)
-         followedSellers.push(id);
+        // console.log(id)
+        //  followedSellers.push(id);
 
      }
-    function unfollow(idx){
+    function unfollow(id){
         setFollowStatus(false);
-        console.log(idx)
-        followedSellers.filter((seller)=>{seller.id !==idx})
+        // console.log(idx)
+        // followedSellers.filter((seller)=>{seller.id !==idx})
     }
 
     const sells = sellers.map((seller)=>{
@@ -46,7 +46,7 @@ const SellerFollow = () => {
         <div>
             {seller.name}
             {followStatus ?
-            <button onClick={unfollow}>Follow</button>
+            <button onClick={()=>{unfollow(seller.id)}}>Follow</button>
             :
             <button onClick={()=>{follow(seller.id)}}>Unfollow</button>
             }
