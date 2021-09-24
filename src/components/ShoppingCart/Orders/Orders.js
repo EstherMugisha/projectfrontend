@@ -3,18 +3,16 @@ import axios from 'axios';
 import './Orders.css';
 import Cookies from 'js-cookie';
 import {useSelector} from "react-redux";
-import {useHistory} from "react-router";
 import toast, {Toaster} from "react-hot-toast";
 import Order from "../Order/Order";
 
 
 const Orders = (props) => {
-    const history = useHistory();
 
-    const isAuthenticated = useSelector(state => state.auth.isAuthenticated); // put the name of the slice
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
     const [orders, setOrders] = useState([]);
-    const [isLoading, setLoading] = useState(false); // indicates that is retreiving data
+    const [isLoading, setLoading] = useState(false);
     const [error, setError] = useState();
     const [role, setRole] = useState("BUYER");
 
@@ -25,7 +23,7 @@ const Orders = (props) => {
 
     function fetchOrdersHandler() {
         setLoading(true);
-        setError(null); // this is to set the error to null, if there were any previous errors existing
+        setError(null);
         axios.get('/orders/history', {headers})
             .then(response => {
                 setOrders(response.data);

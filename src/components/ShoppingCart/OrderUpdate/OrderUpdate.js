@@ -7,7 +7,6 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const OrderUpdateForm = (props) => {
-    const [isOpen, setIsOpen] = useState(false);
     const [orderStatus, setOrderStatus] = useState();
     const statusForm = useRef();
 
