@@ -11,15 +11,18 @@ const Header = (props) => {
 
     const dispatch = useDispatch();
     const [role, setRole] = useState({role: 'BUYER'});
+    const [userDetails, setUserDetails] = useState({});
 
     const logoutHandler = () => {
         dispatch(authActions.logout());
         <Redirect to='/login'/>;
     }
     useEffect(() => {
-        const userRole = JSON.parse(localStorage.getItem("userInfo")).user.role;
-        setRole(userRole);
-        console.log(userRole)
+        if (isAuthenticated) {
+            setUserDetails(JSON.parse(localStorage.getItem("userInfo")).user);
+            setRole(userDetails.role);
+            console.log(role);
+        }
 
     }, []);
 

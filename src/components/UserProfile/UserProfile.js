@@ -18,7 +18,7 @@ const UserProfile = (props) => {
     setUserData(userId);
     console.log(userId);
     axios
-      .get("/points" , headers)
+      .get("/points" , {headers})
       .then((r) => setPoints(r.data.points))
       .catch((e) => console.log(e));
   }, []);
