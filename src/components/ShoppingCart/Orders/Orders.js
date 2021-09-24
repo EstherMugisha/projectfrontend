@@ -1,22 +1,22 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from 'axios';
 import './Orders.css';
 import Cookies from 'js-cookie';
 import {useSelector} from "react-redux";
-import { useHistory } from "react-router";
+import {useHistory} from "react-router";
 import toast, {Toaster} from "react-hot-toast";
 import Order from "../Order/Order";
 
 
 const Orders = (props) => {
-    const history= useHistory();
+    const history = useHistory();
 
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated); // put the name of the slice
 
     const [orders, setOrders] = useState([]);
     const [isLoading, setLoading] = useState(false); // indicates that is retreiving data
     const [error, setError] = useState();
-    const [role,setRole] = useState("BUYER");
+    const [role, setRole] = useState("BUYER");
 
     const headers = {
         'Access-Control-Allow-Origin': '*',
@@ -29,7 +29,7 @@ const Orders = (props) => {
         axios.get('/orders/history', {headers})
             .then(response => {
                 setOrders(response.data);
-                if(isAuthenticated){
+                if (isAuthenticated) {
                     setRole(Cookies.get('user_role'));
                 }
             })

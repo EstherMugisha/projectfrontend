@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import './Order.css';
 import {useSelector} from 'react-redux';
 import {useHistory} from "react-router";
@@ -6,17 +6,33 @@ import swal from 'sweetalert';
 import toast from "react-hot-toast";
 import axios from "axios";
 import Cookies from "js-cookie";
+import OrderUpdateForm from "../OrderUpdate/OrderUpdate";
 
 const Order = (props) => {
     const history = useHistory();
     const role = props.role;
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
+    const [isOpen, setIsOpen] = useState(false);
+
     const headers = {
         'Access-Control-Allow-Origin': '*',
         'Authorization': `Bearer ${Cookies.get('user')}`,
     }
 
+    function openModal() {
+        setIsOpen(true);
+    }
+
+    function closeModal() {
+        setIsOpen(false);
+    }
+
+    function handleSubmit() {
+        setIsOpen(false);
+        props.refreshOrders();
+    }
+    
     function cancelOrder() {
         axios.post('/orders/' + props.id + '/status', {orderStatus: 4}, {headers})
             .then(function (response) {
@@ -49,7 +65,7 @@ const Order = (props) => {
             <div className="Info">
                 <div className="name">Status: {props.status}</div>
                 <div className="date">Date: {props.createdAt}</div>
-                <div className="buyer">{props.buyer.name}</div>
+                <div className="buyer">Buyer: {props.buyer.name}</div>
                 <div>
                     <span className="bottomButtons">
                         {props.status === 'CANCELLED' ?
@@ -57,11 +73,20 @@ const Order = (props) => {
                             :
                             <button className="btn btn-danger" onClick={confirmCancelOrder}>Cancel Order</button>
                         }
-
-                         <button className="btn btn-info text-white">Update Order Status</button>
+                         <button className="btn btn-info text-white" onClick={openModal}>Update Order Status</button>
                     </span>
                 </div>
             </div>
+            { isOpen ?
+                <OrderUpdateForm
+                    closeModal={closeModal}
+                    isOpen={isOpen}
+                    handleSubmit={handleSubmit}
+                    id={props.id}
+                />
+                :
+                null
+            }
         </section>
 
     );

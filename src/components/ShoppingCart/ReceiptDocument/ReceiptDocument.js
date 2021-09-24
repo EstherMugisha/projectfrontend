@@ -14,6 +14,7 @@ function ReceiptDocument(props) {
     const [receiptDetails, setReceiptDetails] = useState({});
     const [orderDetails, setOrderDetails] = useState({});
     const [userDetails, setUserDetails] = useState({});
+    const [addressDetails, setAddressDetails] = useState({});
     const contentArea = useRef(null);
     const [isLoading, setLoading] = useState(false); // indicates that is retreiving data
     const [error, setError] = useState();
@@ -39,6 +40,7 @@ function ReceiptDocument(props) {
                     setReceiptDetails(response.data);
                     setOrderDetails(response.data.order);
                     setUserDetails(response.data.order.user);
+                    setAddressDetails(response.data.order.billingAddress);
                 })
                 .catch(error => {
                     setError(error.message);
@@ -63,7 +65,10 @@ function ReceiptDocument(props) {
                     <p><b>Order #</b> {orderDetails.id}</p>
                     <p><b>Amount:</b> {orderDetails.totalPrice}</p>
                     <p><b>Date:</b> {orderDetails.created_at}</p>
-
+                    <h4>Address</h4>
+                    <p><b>City:</b> {addressDetails.city}</p>
+                    <p><b>Street:</b> {addressDetails.street}</p>
+                    <p><b>State:</b> {addressDetails.state}</p>
                     <div className="button-area">
                         <Button onClick={handleExportWithFunction}>Download Receipt</Button>
                     </div>
