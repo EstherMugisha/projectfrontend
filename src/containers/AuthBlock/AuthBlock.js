@@ -6,16 +6,17 @@ import UserProfile from '../../components/UserProfile/UserProfile';
 import {Redirect, Route, Switch} from 'react-router';
 import Products from "../../components/Products/Products";
 import NewProduct from "../../components/NewProduct/NewProduct";
-import {AllProducts} from "../../store/AllProducts";
+import {FollowedSellers} from "../../store/FollowedSellers";
 import ShoppingCart from "../../components/ShoppingCart/ShoppingCart";
 import APIConfig from "../../store/API-Config";
+import SellerFollow from '../../components/Following/SellerFollow';
 
 const AuthBlock = () => {
-    const [allProducts, setAllProducts] = useState([]);
+    const [followedSellers, setFollowedSellers] = useState([]);
     // const base = "http://localhost:8081/";
 
     return (
-        <AllProducts.Provider value={{ allProducts, setAllProducts}}>
+        <FollowedSellers.Provider value={{ followedSellers, setFollowedSellers}}>
             {/*<APIConfig.Provider value={*/}
             {/*    {*/}
             {/*        productAPI: base + 'products',*/}
@@ -31,11 +32,12 @@ const AuthBlock = () => {
                         <Route path='/products' component={Products}/>
                         <Route path='/new-product' component={NewProduct}/>
                         <Route path='/cart' component={ShoppingCart}/>
+                        <Route path='/sellers' component={SellerFollow}/>
                         <Redirect from="/" to='login'/>
                     </Switch>
                 </Fragment>
             {/*</APIConfig.Provider>*/}
-        </AllProducts.Provider>
+        </FollowedSellers.Provider>
     );
 }
 

@@ -1,7 +1,7 @@
 import React, {useContext, useState} from "react";
 import './Product.css';
 import Cookies from 'js-cookie';
-import {AllProducts} from "../../store/AllProducts";
+//import {AllProducts} from "../../store/FollowedSellers";
 import {useSelector} from 'react-redux';
 import axios from "axios";
 import { useHistory } from "react-router";
@@ -9,7 +9,7 @@ import { useHistory } from "react-router";
 const Product = (props) => {
     const role = props.role;
     const history= useHistory();
-    const {allProducts, setAllProducts} = useContext(AllProducts);
+   // const {allProducts, setAllProducts} = useContext(AllProducts);
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
     function removeProductHandler() {
@@ -19,8 +19,6 @@ const Product = (props) => {
         }
         axios.delete('/products/'+props.id, {headers})
         .then(history.push('/products'));
-        // const index = allProducts.indexOf(props.id)
-        // setAllProducts(allProducts.filter((item, idx) => idx !== index));
     }
 
     function addToCart(){
@@ -48,17 +46,17 @@ const Product = (props) => {
             :
             <section>
 
-                        {/* {
+                        {
                         true
                         ?
                         <button onClick={() => {addToCart()}}>
                             add to cart </button>
                         :
                         <button onClick={() => {
-                            console.log(allProducts);
-                            removeFromCart([...allProducts, props.id])
+   //                         console.log(allProducts);
+     //                       removeFromCart([...allProducts, props.id])
                         }}>
-                            remove from cart </button>} */}
+                            remove from cart </button>}
             </section>
             
             

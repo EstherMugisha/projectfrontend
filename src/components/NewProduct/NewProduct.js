@@ -22,20 +22,13 @@ const NewProduct = (props) => {
     function PostDataHandler() {
         const form = newProductForm.current
         const data = {
-            title: form['title'].value,
+            name: form['name'].value,
             price: form['price'].value,
-            category: form['category'].value
+            description: form['description'].value
         };
         console.log(data);
 
-        axios.get(cartAPI, data, {headers})
-        .then(data => {
-            console.log('Success:', data);
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-
+       
         axios.post("/products", data, {headers})
             .then(data => {
                 console.log('Success:', data);
@@ -59,12 +52,7 @@ const NewProduct = (props) => {
                     <input type="text" label={'price'} name={'price'}/>
 
                     <label>Description</label>
-                    <select label={'description'} name={'description'}>
-                        <option value="Laptop">Laptop</option>
-                        <option value="Desktop">Desktop</option>
-                        <option value="Tablet">Tablet</option>
-                        <option value="Smartphone">Smartphone</option>
-                    </select>
+                    <input type="text" label={'description'} name={'description'}/>
                 </form>
                 <button onClick={PostDataHandler}>Add Product</button>
             </div>

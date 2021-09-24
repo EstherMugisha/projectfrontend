@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import './header.css';
 import {useDispatch, useSelector} from 'react-redux';
 import {authActions} from '../../store/index';
@@ -6,7 +6,10 @@ import {Link, Redirect} from 'react-router-dom';
 import 'react-router';
 
 const Header = (props) => {
+    const [role,setRole] = useState("BUYER");
+
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated); // put the name of the slice
+    
     const dispatch = useDispatch();
 
     const logoutHandler = () => {
@@ -19,21 +22,11 @@ const Header = (props) => {
             <h1>Mini Online Market</h1>
             {isAuthenticated && (<nav>
                 <ul>
-                    <li>
-                        <Link to="/new-product"> Add Product</Link>
-                    </li>
-                    <li>
-                        <Link to="/products">My Products</Link>
-                    </li>
-                    <li>
-                        <Link to="/cart">Cart</Link>
-                    </li>
-                    <li>
-                        <Link to="/user"> Profile </Link>
-                    </li>
-                    <li>
-                        <button onClick={logoutHandler}>Logout</button>
-                    </li>
+                     <li><Link to="/sellers">All Sellers</Link></li>
+                    <li><Link to="/products">My Products</Link></li>
+                    <li><Link to="/cart">Cart</Link></li>
+                    <li><Link to="/user"> Profile </Link></li>
+                    <li><button onClick={logoutHandler}>Logout</button></li>
                 </ul>
             </nav>)}
 

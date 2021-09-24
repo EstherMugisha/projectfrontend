@@ -8,7 +8,6 @@ import { useHistory } from "react-router";
 
 
 const Products = (props) => {
-    //const {allProducts, setAllProducts} = useContext([]);
     const history=useHistory();
 
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated); // put the name of the slice
