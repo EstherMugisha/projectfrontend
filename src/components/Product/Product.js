@@ -19,10 +19,6 @@ const Product = (props) => {
             .then(props.refreshProducts);
     }
 
-    function removeFromCart() {
-
-    }
-
     function showReviews() {
         history.push('/review')
     }

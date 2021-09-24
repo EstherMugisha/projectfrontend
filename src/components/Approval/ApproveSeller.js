@@ -45,7 +45,9 @@ const ApproveSeller = (props) => {
                 name={s.name}
                 username={s.username}
                 email={s.email}
+                status={s.status}
                 id={s.id}
+                refreshList={getPendingSellers}
             />)
     });
 
@@ -54,8 +56,6 @@ const ApproveSeller = (props) => {
         content = rproducts;
     } else if (error) {
         content = <p>{error}</p>;
-    } else if (isLoading) {
-        content = <p> Loading ... </p>;  
     }
 
     function displayShownProducts() {

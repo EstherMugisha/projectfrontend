@@ -4,13 +4,14 @@ import {useDispatch, useSelector} from 'react-redux';
 import {authActions} from '../../store/index';
 import {Link, Redirect} from 'react-router-dom';
 import 'react-router';
+import Cookies from "js-cookie";
 
 const Header = (props) => {
 
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated); // put the name of the slice
 
     const dispatch = useDispatch();
-    const [role, setRole] = useState({role: 'BUYER'});
+    const [role, setRole] = useState("BUYER");
     const [userDetails, setUserDetails] = useState({});
 
     const logoutHandler = () => {
@@ -18,12 +19,15 @@ const Header = (props) => {
         <Redirect to='/login'/>;
     }
     useEffect(() => {
+        // if (isAuthenticated) {
+        //     setUserDetails(JSON.parse(localStorage.getItem("userInfo")).user.role);
+        //     setRole(userDetails);
+        //     console.log(role);
+        // }
         if (isAuthenticated) {
-            setUserDetails(JSON.parse(localStorage.getItem("userInfo")).user);
-            setRole(userDetails.role);
-            console.log(role);
+            setRole(Cookies.get('user_role'));
         }
-
+        console.log(role);
     }, []);
 
     return (
@@ -31,13 +35,12 @@ const Header = (props) => {
             <h1>Mini Online Market</h1>
             {isAuthenticated && (<nav>
                 <ul>
-                    {role == 'ADMIN' ?
-
+                    {role === 'ADMIN' ?
                         <li>
                             <Link to="/approve-sellers"> Approve Sellers</Link>
                         </li>
                         : null}
-                    {role == 'SELLER' ?
+                    {role === 'SELLER' ?
                         <li>
                             <Link to="/new-product"> Add Product</Link>
                         </li>
@@ -46,7 +49,7 @@ const Header = (props) => {
                     <li>
                         <Link to="/products">Products</Link>
                     </li>
-                    {role == 'BUYER' ?
+                    {role === 'BUYER' ?
                         <li>
                             <Link to="/cart">Cart</Link>
                         </li>
@@ -60,7 +63,6 @@ const Header = (props) => {
                     <li>
                         <Link to="/user"> Profile </Link>
                     </li>
-                    {/*}*/}
                     <li>
                         <button onClick={logoutHandler}>Logout</button>
                     </li>
