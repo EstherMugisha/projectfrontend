@@ -4,14 +4,14 @@ import './Products.css';
 import Product from "../Product/Product";
 import Cookies from 'js-cookie';
 import {useSelector} from "react-redux";
-import AllProducts from "../../store/AllProducts";
+import Review from "../Review/Review";
 import { useHistory } from "react-router";
 import toast, {Toaster} from "react-hot-toast";
 
 
 const Products = (props) => {
-    const {allProducts, setAllProducts} = useContext(AllProducts);
     const history= useHistory();
+
 
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated); // put the name of the slice
 
@@ -26,12 +26,14 @@ const Products = (props) => {
     }
 
     function fetchProductsHandler() {
+        const headers = {
+            'Access-Control-Allow-Origin': '*',
+        }
         setLoading(true);
         setError(null); // this is to set the error to null, if there were any previous errors existing
-        axios.get('/products', {headers})
+        axios.get('http://localhost:8080/products', {headers})
             .then(response => {
                 setProducts(response.data);
-                setAllProducts(response.data);
                 if(isAuthenticated){
                     setRole(Cookies.get('user_role'));
                 }
@@ -59,6 +61,7 @@ const Products = (props) => {
 
     const rproducts = products.map(product => {
         return (
+            <section>
             <Product
                 key={product.id}
                 name={product.name}
@@ -67,7 +70,15 @@ const Products = (props) => {
                 id={product.id}
                 role={role}
                 addProductToCart={addProductToCart}
-            />)
+                refreshProducts={fetchProductsHandler}
+              />
+
+              <Review
+              key={product.name}
+              id={product.id}
+              />
+              </section>
+        )
     });
 
     let content = <p>No products available</p>;

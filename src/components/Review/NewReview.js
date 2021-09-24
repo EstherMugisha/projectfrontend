@@ -1,37 +1,30 @@
 import React, {Fragment, useRef, useContext} from 'react'
-import './NewProduct.css'
 import axios from "axios";
 import Cookies from "js-cookie";
 import {useSelector} from "react-redux";
-import APIConfig from '../../store/API-Config';
-import Products from '../Products/Products';
 import { FormErrors } from './FormErrors';
 
 
 
-const NewProduct = (props) => {
-    const APIs= useContext(APIConfig);
-    const cartAPI=APIs.cartAPI;
-
+const NewReview = (props) => {
+    
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated); // put the name of the slice
-    const newProductForm = useRef();
+    const newReviewForm = useRef();
 
     const headers = {
         'Access-Control-Allow-Origin': '*',
         'Authorization': `Bearer ${Cookies.get('user')}`,
     }
 
-    function PostDataHandler() {
-        const form = newProductForm.current
+    function PostReview() {
+        const form = newReviewForm.current
         const data = {
-            name: form['name'].value,
-            price: form['price'].value,
-            description: form['description'].value
+            content: form['content'].value,
         };
         console.log(data);
 
        
-        axios.post("/products", data, {headers})
+        axios.post("/review", data, {headers})
             .then(data => {
                 console.log('Success:', data);
                 props.history.push('/products'); 
@@ -48,21 +41,15 @@ const NewProduct = (props) => {
             {/* <div className="panel panel-default">
                 <FormErrors formErrors={this.state.formErrors} />
             </div> */}
-                <form ref={newProductForm}>
-                    <h1>Add a Product</h1>
-                    <label>name</label>
-                    <input type="text" label={'name'} name={'name'}/>
-
-                    <label>Price</label>
-                    <input type="text" label={'price'} name={'price'}/>
-
-                    <label>Description</label>
-                    <input type="text" label={'description'} name={'description'}/>
+                <form ref={newReviewForm}>
+                    <h1>Add a Review</h1>
+                    <label>content</label>
+                    <textarea type="text" label={'content'} name={'content'}/>
                 </form>
-                <button onClick={PostDataHandler}>Add Product</button>
+                <button onClick={PostReview}>Post Review</button>
             </div>
         </Fragment>
     );
 }
 
-export default NewProduct;
+export default NewReview;
