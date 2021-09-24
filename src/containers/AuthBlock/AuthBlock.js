@@ -9,6 +9,7 @@ import NewProduct from "../../components/NewProduct/NewProduct";
 
 import {FollowedSellers} from "../../store/FollowedSellers";
 import ShoppingCart from "../../components/ShoppingCart/ShoppingCart";
+import ApproveSeller from "../../components/Approval/ApproveSeller";
 import SellerFollow from '../../components/Following/SellerFollow';
 import Review from '../../components/Review/Review';
 import NewReview from '../../components/Review/NewReview';
@@ -27,6 +28,7 @@ const AuthBlock = () => {
                 <Switch>
                     <Route path='/login' component={Auth}/>
                     <Route path='/sign-up' component={SignUp}/>
+                    <Route path='/approve-sellers' component={ApproveSeller}/>
                     <Route path='/user' component={UserProfile}/>
                     <Route path='/products' component={Products}/>
                     <Route path='/new-product' component={NewProduct}/>
@@ -42,7 +44,6 @@ const AuthBlock = () => {
                 </Switch>
             </Fragment>
         </FollowedSellers.Provider>
-
     );
 }
 
