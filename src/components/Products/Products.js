@@ -70,7 +70,7 @@ const Products = (props) => {
             />)
     });
 
-    let content = <p>No posts available</p>;
+    let content = <p>No products available</p>;
     if (rproducts.length > 0) {
         content = rproducts;
     } else if (error) {

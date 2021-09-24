@@ -43,6 +43,9 @@ const Orders = (props) => {
 
     useEffect(fetchOrdersHandler, []); // This will be fetched when mounted
 
+    function refreshOrders() {
+        fetchOrdersHandler();
+    }
 
     const fetchedOrders = orders.map(order => {
         return (
@@ -55,7 +58,7 @@ const Orders = (props) => {
                 orderLine={order.orderLine}
                 totalPrice={order.totalPrice}
                 createdAt={order.created_at}
-                // addProductToCart={addProductToCart}
+                refreshOrders={refreshOrders}
             />)
     });
 

@@ -27,8 +27,12 @@ const ShoppingCart = (props) => {
         setLoading(true);
         setError(null);
         axios.get('/cart', {headers}).then(function (response) {
-            setCartItems(response.data.cartLine);
-            setTotal(response.data.totalPrice);
+            if (response.data == null) {
+                toast("Your cart is empty");
+            } else {
+                setCartItems(response.data.cartLine);
+                setTotal(response.data.totalPrice);
+            }
             console.log(response.data);
         }).catch(function (error) {
             setLoading(false);
@@ -103,7 +107,6 @@ const ShoppingCart = (props) => {
     }
 
     function goToCheckout() {
-        toast("checkout sasa gathee");
         history.push("/checkout");
     }
 
