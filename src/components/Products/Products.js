@@ -4,16 +4,12 @@ import './Products.css';
 import Product from "../Product/Product";
 import Cookies from 'js-cookie';
 import {useSelector} from "react-redux";
-import AllProducts from "../../store/AllProducts";
-import { APIConfig } from "../../store/API-Config";
 import { useHistory } from "react-router";
 
 
 const Products = (props) => {
-    const {allProducts, setAllProducts} = useContext(AllProducts);
-    const APIs= useContext(APIConfig);
-    const productAPI=APIs.productAPI;
-    const history= useHistory();
+    //const {allProducts, setAllProducts} = useContext([]);
+    const history=useHistory();
 
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated); // put the name of the slice
 
@@ -25,14 +21,13 @@ const Products = (props) => {
     function fetchProductsHandler() {
         const headers = {
             'Access-Control-Allow-Origin': '*',
-            'Authorization': `Bearer ${Cookies.get('user')}`,
         }
         setLoading(true);
         setError(null); // this is to set the error to null, if there were any previous errors existing
-        axios.get(productAPI, {headers})
+        axios.get('http://localhost:8080/products', {headers})
             .then(response => {
                 setProducts(response.data);
-                setAllProducts(response.data);
+                //setAllProducts(response.data);
                 if(isAuthenticated){
                     setRole(Cookies.get('user_role'));
                 }
@@ -44,7 +39,7 @@ const Products = (props) => {
 
     }
 
-    useEffect(fetchProductsHandler, []); // This will be fetched when mounted
+    useEffect(fetchProductsHandler, [products]); // This will be fetched when mounted
 
     const rproducts = products.map(product => {
         return (
@@ -55,7 +50,7 @@ const Products = (props) => {
                 description={product.description}
                 id={product.id}
                 role={role}
-            />)
+              />)
     });
 
     let content = <p>No posts available</p>;

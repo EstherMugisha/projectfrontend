@@ -4,11 +4,11 @@ import AuthBlock from './containers/AuthBlock/AuthBlock';
 
 const App = () => {
 
-  return (
-    <BrowserRouter>
-      <AuthBlock />
-    </BrowserRouter>
-  );
+    return (
+        <BrowserRouter>
+            <AuthBlock />
+        </BrowserRouter>
+    );
 }
 
 export default App;

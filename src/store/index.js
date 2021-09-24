@@ -4,8 +4,7 @@ import Cookies from 'js-cookie';
 
 
 // Authentication
-const initialAuthState = { isAuthenticated: false };
-
+const initialAuthState = { isAuthenticated: Cookies.get("user") };
 const authSlice = createSlice(
     {
         name: 'authentication',
@@ -29,6 +28,26 @@ const authSlice = createSlice(
                     })
                     .catch(err => console.log(err.message))
                 }
+
+
+            },
+            signup(state, action) {
+                const userCred = action.payload;
+                
+                // if (Cookies.get('user') != null) {
+                //     state.isAuthenticated = true
+                // }
+                // else {
+                    axios.post('http://localhost:8081/user', userCred)
+                    .then(response => {
+                        // Cookies.set('user', response.data.jwt)
+                        // state.isAuthenticated = true
+                        // axios.defaults.headers.common = {
+                        //     'Authorization': 'Bearer ' + response.data.jwt
+                        // };
+                    })
+                    .catch(err => console.log(err.message))
+                // }
 
 
             },

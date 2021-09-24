@@ -4,6 +4,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import {useSelector} from "react-redux";
 import APIConfig from '../../store/API-Config';
+import Products from '../Products/Products';
 
 
 const NewProduct = (props) => {
@@ -51,14 +52,14 @@ const NewProduct = (props) => {
             <div className="NewProduct">
                 <form ref={newProductForm}>
                     <h1>Add a Product</h1>
-                    <label>Title</label>
-                    <input type="text" label={'title'} name={'title'}/>
+                    <label>name</label>
+                    <input type="text" label={'name'} name={'name'}/>
 
                     <label>Price</label>
                     <input type="text" label={'price'} name={'price'}/>
 
-                    <label>Category</label>
-                    <select label={'category'} name={'category'}>
+                    <label>Description</label>
+                    <select label={'description'} name={'description'}>
                         <option value="Laptop">Laptop</option>
                         <option value="Desktop">Desktop</option>
                         <option value="Tablet">Tablet</option>
