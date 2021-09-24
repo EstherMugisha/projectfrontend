@@ -9,8 +9,7 @@ import { APIConfig } from "../../store/API-Config";
 
 const ApproveSeller = (props) => {
 
-    const isAuthenticated = useSelector(state => state.auth.isAuthenticated); 
-   
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
     const [pendingSellers, setSellers] = useState([]);
     const [displayAllFlag, setDisplayAllFlag] = useState(true);    

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import './Order.css';
 import {useSelector} from 'react-redux';
 import {useHistory} from "react-router";
@@ -10,8 +10,8 @@ import OrderUpdateForm from "../OrderUpdate/OrderUpdate";
 
 const Order = (props) => {
     const history = useHistory();
-    const role = props.role;
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+    const [role, setRole] = useState("BUYER");
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -19,6 +19,12 @@ const Order = (props) => {
         'Access-Control-Allow-Origin': '*',
         'Authorization': `Bearer ${Cookies.get('user')}`,
     }
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            setRole(Cookies.get('user_role'));
+        }
+    }, []);
 
     function openModal() {
         setIsOpen(true);
@@ -32,7 +38,7 @@ const Order = (props) => {
         setIsOpen(false);
         props.refreshOrders();
     }
-    
+
     function cancelOrder() {
         axios.post('/orders/' + props.id + '/status', {orderStatus: 4}, {headers})
             .then(function (response) {
@@ -73,11 +79,13 @@ const Order = (props) => {
                             :
                             <button className="btn btn-danger" onClick={confirmCancelOrder}>Cancel Order</button>
                         }
-                         <button className="btn btn-info text-white" onClick={openModal}>Update Order Status</button>
+                        {role !== 'BUYER' ?
+                            <button className="btn btn-info text-white" onClick={openModal}>Update Order Status</button>
+                            : null}
                     </span>
                 </div>
             </div>
-            { isOpen ?
+            {isOpen ?
                 <OrderUpdateForm
                     closeModal={closeModal}
                     isOpen={isOpen}

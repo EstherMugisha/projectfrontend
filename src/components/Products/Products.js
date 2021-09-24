@@ -11,8 +11,6 @@ import toast, {Toaster} from "react-hot-toast";
 
 const Products = (props) => {
     const history= useHistory();
-
-
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated); // put the name of the slice
 
     const [products, setProducts] = useState([]);
@@ -86,8 +84,6 @@ const Products = (props) => {
         content = rproducts;
     } else if (error) {
         content = <p>{error}</p>;
-    } else if (isLoading) {
-        content = <p> Loading ... </p>;  // BONUS MAKE THIS WAIT FOR A 30 seconds
     }
 
     function addProduct() {
