@@ -11,6 +11,8 @@ import ShoppingCart from "../../components/ShoppingCart/ShoppingCart";
 import {AllProducts} from "../../store/AllProducts";
 import Checkout from "../../components/ShoppingCart/Checkout/Checkout";
 import Orders from "../../components/ShoppingCart/Orders/Orders";
+import Payments from "../../components/Payments/Payments";
+import ReceiptDocument from "../../components/ShoppingCart/ReceiptDocument/ReceiptDocument";
 
 const AuthBlock = () => {
     const [allProducts, setAllProducts] = useState([]);
@@ -28,6 +30,8 @@ const AuthBlock = () => {
                     <Route path='/cart' component={ShoppingCart}/>
                     <Route path='/checkout' component={Checkout}/>
                     <Route path='/orders' component={Orders}/>
+                    <Route path='/payments' component={Payments}/>
+                    <Route path="/receipt" component={ReceiptDocument} />
                     <Redirect from="/" to='login'/>
                 </Switch>
             </Fragment>

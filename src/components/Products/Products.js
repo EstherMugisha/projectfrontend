@@ -46,15 +46,15 @@ const Products = (props) => {
     useEffect(fetchProductsHandler, []); // This will be fetched when mounted
 
     function addProductToCart(id) {
-        const data = {
+       const data = {
             quantity: 1,
             id: id
         }
         axios.post('/cart', data, {headers}).then(function (response) {
             toast.success('Added to Cart');
         }).catch(error => {
-            toast(error.message);
-        })
+            toast.error(error.message);
+        });
     }
 
     const rproducts = products.map(product => {

@@ -1,0 +1,22 @@
+.Payments {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    width: 80%;
+    margin: auto;
+}
+
+section {
+    text-align: center;
+    margin: 10px;
+    padding: 10px;
+}
+
+button {
+    background-color: #04fcf4;
+    color: black;
+    padding: 10px;
+    border-radius: 10px;
+    border-color: #04fcf4;
+    border-width: 0;
+}

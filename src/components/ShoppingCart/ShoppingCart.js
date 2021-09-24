@@ -59,7 +59,7 @@ const ShoppingCart = (props) => {
                 toast.success('Quantity updated');
                 fetchCart();
             }).catch(error => {
-                toast(error.message);
+                toast.error(error.message);
             })
         } else {
             toast.error("Please go to cart to update");

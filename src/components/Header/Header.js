@@ -32,6 +32,9 @@ const Header = (props) => {
                         <Link to="/orders">Orders</Link>
                     </li>
                     <li>
+                        <Link to="/payments">Payments</Link>
+                    </li>
+                    <li>
                         <Link to="/user"> Profile </Link>
                     </li>
                     <li>
