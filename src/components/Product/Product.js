@@ -19,10 +19,6 @@ const Product = (props) => {
             .then(props.refreshProducts);
     }
 
-    function addToCart() {
-
-    }
-
     function removeFromCart() {
 
     }
@@ -37,12 +33,12 @@ const Product = (props) => {
 
     return (
         <section className="Product">
+            {isAuthenticated ? null : props.history.push("/login")}
             <h1>{props.title}</h1>
             <div className="Info">
                 <div className="name">{props.name}</div>
                 <div className="Price">${props.price}</div>
                 <div className="description">{props.description}</div>
-                {isAuthenticated ? null : props.history.push("/login")}
                 {
                     role === "SELLER" ?
                         <div>
@@ -54,19 +50,11 @@ const Product = (props) => {
                         :
                         <div>
                             <div>
-                                {
-                                    true
-                                        ?
-                                        <button onClick={() => {
-                                            addToCart()
-                                        }}>
-                                            add to cart </button>
-                                        :
-                                        <button onClick={() => {
-                                            //                         console.log(allProducts);
-                                            //                       removeFromCart([...allProducts, props.id])
-                                        }}>
-                                            remove from cart </button>}
+                                <button onClick={() => {
+                                    props.addProductToCart(props.id)
+                                }}>
+                                    Add to cart
+                                </button>
                             </div>
                             <div>
                                 <button onClick={addReview}>Add Review</button>

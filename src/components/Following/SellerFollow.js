@@ -27,7 +27,7 @@ const SellerFollow = () => {
                 setLoading(false);
             })
         }
-    useEffect(fetchSellers, [sellers]);
+    useEffect(fetchSellers, []);
 
     function follow(id){
         setFollowStatus(true);
