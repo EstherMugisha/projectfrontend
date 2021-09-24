@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 
 
 // Authentication
-const initialAuthState = { isAuthenticated: false };
+const initialAuthState = { isAuthenticated: Cookies.get("user") };
 
 const authSlice = createSlice(
     {
@@ -21,6 +21,7 @@ const authSlice = createSlice(
                     axios.post('/authenticate', userCred)
                     .then(response => {
                         Cookies.set('user', response.data.jwt);
+                        localStorage.setItem("userInfo",JSON.stringify(response.data));
                         state.isAuthenticated = true
                         axios.defaults.headers.common = {
                             'Authorization': 'Bearer ' + response.data.jwt
@@ -32,12 +33,16 @@ const authSlice = createSlice(
 
             },
             logout(state) {
-                Cookies.remove('user')
+                Cookies.remove('user');
+                localStorage.removeItem("userInfo");
                 axios.defaults.headers.common = {
                     'Authorization': ''
                 };
                 state.isAuthenticated = false;
             },
+            getCurrentUser(){
+                return JSON.parse(localStorage.getItem("UserInfo"));
+            }
 
         }
 
