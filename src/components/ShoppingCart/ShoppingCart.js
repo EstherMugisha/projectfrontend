@@ -7,9 +7,10 @@ import CartItem from "./CartItem/CartItem";
 import Total from "./Total/Total";
 
 import toast, {Toaster} from 'react-hot-toast';
+import {useHistory} from "react-router";
 
 const ShoppingCart = (props) => {
-
+    const history = useHistory();
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
     const [cartItems, setCartItems] = useState([]);
@@ -44,26 +45,34 @@ const ShoppingCart = (props) => {
     }
 
     function addItemToCart(id) {
-        const data = {
-            quantity: 1,
-            id: id
+        if (!props.isOnCheckout) {
+            const data = {
+                quantity: 1,
+                id: id
+            }
+            axios.post('/cart', data, {headers}).then(function (response) {
+                //add to global cart
+                toast.success('Quantity updated');
+                fetchCart();
+            }).catch(error => {
+                toast(error.message);
+            })
+        } else {
+            toast.error("Please go to cart to update");
         }
-        axios.post('/cart', data, {headers}).then(function (response) {
-            //add to global cart
-            toast.success('Quantity updated');
-            fetchCart();
-        }).catch(error => {
-            toast(error.message);
-        })
     }
 
     function removeItemFromCart(id) {
-        axios.post('/cart/remove/' + id,null, {headers}).then(function (response) {
-            toast.success('Quantity updated');
-            fetchCart();
-        }).catch(error => {
-            toast(error.message);
-        })
+        if (!props.isOnCheckout) {
+            axios.post('/cart/remove/' + id, null, {headers}).then(function (response) {
+                toast.success('Quantity updated');
+                fetchCart();
+            }).catch(error => {
+                toast(error.message);
+            })
+        } else {
+            toast.error("Please go to cart to update");
+        }
     }
 
     function showProduct(info) {
@@ -91,17 +100,26 @@ const ShoppingCart = (props) => {
         content = itemsOnCart;
     } else if (error) {
         content = <p>{error}</p>;
-    } else if (isLoading) {
-        content = <p> Loading ... </p>;
+    }
+
+    function goToCheckout() {
+        toast("checkout sasa gathee");
+        history.push("/checkout");
     }
 
     return (
         <React.Fragment>
+            {isAuthenticated ? null : props.history.push("/login")}
             <main className="CartItem">
                 {isAuthenticated ? null : props.history.push("/login")}
                 {content}
                 <Total total={total}/>
             </main>
+            {itemsOnCart.length && !props.isOnCheckout ?
+                <div className="row">
+                    <button className="mt-1 col-md-2 btn btn-primary" onClick={goToCheckout}>Checkout</button>
+                </div>
+                : null}
             <Toaster position="top-right"/>
         </React.Fragment>
     );

@@ -9,6 +9,8 @@ import NewProduct from "../../components/NewProduct/NewProduct";
 import ShoppingCart from "../../components/ShoppingCart/ShoppingCart";
 
 import {AllProducts} from "../../store/AllProducts";
+import Checkout from "../../components/ShoppingCart/Checkout/Checkout";
+import Orders from "../../components/ShoppingCart/Orders/Orders";
 
 const AuthBlock = () => {
     const [allProducts, setAllProducts] = useState([]);
@@ -24,6 +26,8 @@ const AuthBlock = () => {
                     <Route path='/products' component={Products}/>
                     <Route path='/new-product' component={NewProduct}/>
                     <Route path='/cart' component={ShoppingCart}/>
+                    <Route path='/checkout' component={Checkout}/>
+                    <Route path='/orders' component={Orders}/>
                     <Redirect from="/" to='login'/>
                 </Switch>
             </Fragment>

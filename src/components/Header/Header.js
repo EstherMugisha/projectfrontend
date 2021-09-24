@@ -29,6 +29,9 @@ const Header = (props) => {
                         <Link to="/cart">Cart</Link>
                     </li>
                     <li>
+                        <Link to="/orders">Orders</Link>
+                    </li>
+                    <li>
                         <Link to="/user"> Profile </Link>
                     </li>
                     <li>
