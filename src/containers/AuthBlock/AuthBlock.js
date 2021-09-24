@@ -8,6 +8,7 @@ import Products from "../../components/Products/Products";
 import NewProduct from "../../components/NewProduct/NewProduct";
 import {ShowProducts} from "../../store/ShowProducts";
 import ShoppingCart from "../../components/ShoppingCart/ShoppingCart";
+import ApproveSeller from "../../components/Approval/ApproveSeller";
 import APIConfig from "../../store/API-Config";
 
 const AuthBlock = () => {
@@ -31,6 +32,7 @@ const AuthBlock = () => {
                         <Route path='/user' component={UserProfile}/>
                         <Route path='/products' component={Products}/>
                         <Route path='/new-product' component={NewProduct}/>
+                        <Route path='/approve-sellers' component={ApproveSeller}/>
                         <Route path='/cart' component={ShoppingCart}/>
                         <Redirect from="/" to='login'/>
                     </Switch>
