@@ -32,11 +32,11 @@ const NewProduct = (props) => {
         axios.post("/products", data, {headers})
             .then(data => {
                 console.log('Success:', data);
-                props.history.push('/products'); // push will add it to the page stack, replace will just replace the component  // props.history.replace('/posts');
+                props.history.push('/products'); 
             })
             .catch((error) => {
                 console.error('Error:', error);
-            }); // to check push, go to google, then newpost and submit, then go back.
+            }); 
     }
 
     return (

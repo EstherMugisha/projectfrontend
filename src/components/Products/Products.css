@@ -11,11 +11,6 @@ section {
     margin: 10px;
     padding: 10px;
 }
-
-. ProductsButton button {
-    align-content: center;
-}
-
 button {
     background-color: #04fcf4;
     color: black;

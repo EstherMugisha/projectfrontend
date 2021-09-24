@@ -28,6 +28,13 @@ const Product = (props) => {
     function removeFromCart(){
 
     }
+   function showReviews(){
+        history.push('/review')
+    }
+
+    function addReview(){
+     history.push('/new-review')   
+    }
 
     return (
             <section className="Product">
@@ -39,13 +46,13 @@ const Product = (props) => {
 
             {isAuthenticated ? null : props.history.push("/login")}
             {
-            role === "SELLER" ?
-            <section>
-                <button onClick={() => {removeProductHandler()}}>Remove Product </button>       
-            </section>
+            role === "BUYER" ?
+            <div>
+                <button onClick={() => {removeProductHandler()}}>Remove Product </button>   
+            </div>
             :
-            <section>
-
+            <div>
+            <div>
                         {
                         true
                         ?
@@ -57,11 +64,17 @@ const Product = (props) => {
      //                       removeFromCart([...allProducts, props.id])
                         }}>
                             remove from cart </button>}
-            </section>
+            </div>
+            <div>
+            <button onClick={addReview}>Add Review </button> 
+                </div>
+            </div>
             
-            
-}     
+            }     
 
+            </div>
+            <div>
+            <button onClick={() => {showReviews(props.id)}}>check reviews </button> 
             </div>
         </section>
                     

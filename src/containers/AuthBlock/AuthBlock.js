@@ -8,35 +8,29 @@ import Products from "../../components/Products/Products";
 import NewProduct from "../../components/NewProduct/NewProduct";
 import {FollowedSellers} from "../../store/FollowedSellers";
 import ShoppingCart from "../../components/ShoppingCart/ShoppingCart";
-import APIConfig from "../../store/API-Config";
 import SellerFollow from '../../components/Following/SellerFollow';
+import Review from '../../components/Review/Review';
+import NewReview from '../../components/Review/NewReview';
 
 const AuthBlock = () => {
     const {followedSellers, setFollowedSellers} = useState([]);
-    // const base = "http://localhost:8081/";
 
     return (
         <FollowedSellers.Provider value={{ followedSellers, setFollowedSellers}}>
-            {/*<APIConfig.Provider value={*/}
-            {/*    {*/}
-            {/*        productAPI: base + 'products',*/}
-            {/*        cartAPI: base + 'cart',*/}
-            {/*    }*/}
-            {/*}>*/}
-                <Fragment>
-                    <Header/>
-                    <Switch>
-                        <Route path='/login' component={Auth}/>
-                        <Route path='/sign-up' component={SignUp}/>
-                        <Route path='/user' component={UserProfile}/>
-                        <Route path='/products' component={Products}/>
-                        <Route path='/new-product' component={NewProduct}/>
-                        <Route path='/cart' component={ShoppingCart}/>
-                        <Route path='/sellers' component={SellerFollow}/>
-                        <Redirect from="/" to='login'/>
-                    </Switch>
-                </Fragment>
-            {/*</APIConfig.Provider>*/}
+            <Fragment>
+                <Header/>
+                <Switch>
+                    <Route path='/login' component={Auth}/>
+                    <Route path='/sign-up' component={SignUp}/>
+                    <Route path='/user' component={UserProfile}/>
+                    <Route path='/products' component={Products}/>
+                    <Route path='/new-product' component={NewProduct}/>
+                    <Route path='/cart' component={ShoppingCart}/>
+                    <Route path='/review' component={Review}/>
+                    <Route path='/new-review' component={NewReview}/>
+                    <Redirect from="/" to='login'/>
+                </Switch>
+            </Fragment>
         </FollowedSellers.Provider>
     );
 }

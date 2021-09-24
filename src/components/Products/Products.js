@@ -5,6 +5,8 @@ import Product from "../Product/Product";
 import Cookies from 'js-cookie';
 import {useSelector} from "react-redux";
 import { useHistory } from "react-router";
+import { Link, Route } from "react-router-dom";
+import Review from "../Review/Review";
 
 
 const Products = (props) => {
@@ -42,6 +44,7 @@ const Products = (props) => {
 
     const rproducts = products.map(product => {
         return (
+            <section>
             <Product
                 key={product.id}
                 name={product.name}
@@ -49,7 +52,15 @@ const Products = (props) => {
                 description={product.description}
                 id={product.id}
                 role={role}
-              />)
+              />
+
+              <Review
+              key={product.id}
+              id={product.id}
+              />
+              </section>
+        )
+              
     });
 
     let content = <p>No posts available</p>;
