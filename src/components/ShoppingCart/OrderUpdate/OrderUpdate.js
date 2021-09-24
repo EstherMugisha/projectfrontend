@@ -45,8 +45,8 @@ const OrderUpdateForm = (props) => {
                         <select label={'status'} name={'status'} className="form-control">
                             <option value="0">Placed</option>
                             <option value="1">Shipping</option>
-                            <option value="3">On the way</option>
-                            <option value="2">Delivered</option>
+                            <option value="2">On the way</option>
+                            <option value="3">Delivered</option>
                             <option value="4">Cancel</option>
                         </select>
                     </Form.Group>
